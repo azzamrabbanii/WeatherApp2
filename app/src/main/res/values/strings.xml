@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="content_image_item_weather">content image item weather</string>
+    <string name="high">High</string>
+    <string name="low">Low</string>
+    <string name="wed">Wed</string>
+    <string name="feb_12">Feb 12</string>
+</resources>

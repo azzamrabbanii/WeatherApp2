@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_weather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_bg_weather"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:background="@color/purple_500"
+            android:contentDescription="Content bg based on weather" />
+
+        <ImageView
+            android:id="@+id/img_ic_weather"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="64dp"
+            android:contentDescription="Content Icon based on weather"
+            android:src="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_degree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/img_ic_weather"
+            android:fontFamily="sans-serif"
+            android:text="32 °C"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Jakarta"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tv_degree" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            tools:listitem="@layout/row_item_weather"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@id/edt_search"
+            app:layout_constraintTop_toBottomOf="@id/tv_city"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/edt_search"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="48dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="text"
+            app:defaultQueryHint="search on another location"
+            app:iconifiedByDefault="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:queryBackground="@android:color/transparent"
+            app:searchHintIcon="@drawable/ic_search"
+            app:searchIcon="@drawable/ic_search"/>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="@id/edt_search"
+            app:layout_constraintStart_toStartOf="@id/edt_search"
+            app:layout_constraintTop_toBottomOf="@id/edt_search" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
