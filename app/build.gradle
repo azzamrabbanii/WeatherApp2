@@ -21,6 +21,7 @@ android {
         debug{
             buildConfigField("String", "BASE_URL", BaseUrl)
             buildConfigField("String", "API_KEY", ApiKey)
+            buildConfigField("String", "ICON_URL", IconUrl)
         }
         release {
             minifyEnabled false
@@ -57,4 +58,7 @@ dependencies {
     // glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
+
+    // fused location
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 }

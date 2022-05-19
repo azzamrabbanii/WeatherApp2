@@ -22,10 +22,16 @@ interface ApiService {
     ) : Call<ForecastResponse>
 
     @GET("weather")
-    fun weatherByCoordinate(
+    fun weatherByCurrentLocation(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("appid") api_key: String = BuildConfig.API_KEY
     ) : Call<WeatherResponse>
 
+    @GET("forecast")
+    fun forecastByCurrentLocation(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") api_key: String = BuildConfig.API_KEY
+    ) : Call<ForecastResponse>
 }
