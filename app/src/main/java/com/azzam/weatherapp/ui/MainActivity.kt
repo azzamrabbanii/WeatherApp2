@@ -12,7 +12,6 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.azzam.weatherapp.BuildConfig
-import com.azzam.weatherapp.R
 import com.azzam.weatherapp.data.ForecastResponse
 import com.azzam.weatherapp.data.WeatherResponse
 import com.azzam.weatherapp.databinding.ActivityMainBinding
@@ -21,8 +20,7 @@ import com.azzam.weatherapp.utils.sizeIconWeather4x
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import retrofit2.http.Query
-import retrofit2.http.Tag
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -154,7 +152,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     query?.let {
                         viewModel.weatherByCity(it)
-                        viewModel.getForecastByCity(it)
+                        viewModel.ForecastByCity(it)
                     }
                     return true
                 }

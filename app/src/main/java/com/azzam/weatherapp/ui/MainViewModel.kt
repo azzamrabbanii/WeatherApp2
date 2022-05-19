@@ -38,7 +38,7 @@ class MainViewModel : ViewModel() {
 
     fun getWeatherByCity() : LiveData<WeatherResponse> = weatherByCity
 
-    fun getForecastByCity(city: String){
+    fun ForecastByCity(city: String){
         ApiConfig.getApiService().forecastByCity(city).enqueue(object : Callback<ForecastResponse> {
             override fun onResponse(
                 call: Call<ForecastResponse>,
