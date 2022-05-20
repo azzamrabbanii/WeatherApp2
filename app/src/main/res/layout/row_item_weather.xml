@@ -49,6 +49,8 @@
                 android:id="@+id/img_item_weather"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
+                android:background="@drawable/bg_icon_weather"
+                android:backgroundTint="@color/transparent"
                 android:scaleType="fitXY"
                 android:contentDescription="@string/content_image_item_weather" />
         </LinearLayout>
