@@ -1,10 +1,13 @@
 package com.azzam.weatherapp.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel get() = _viewModel as MainViewModel
 
     private val mAdapter by lazy { WeatherAdapter() }
+
+    private var isLoading: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +77,7 @@ class MainActivity : AppCompatActivity() {
 
                 setupBackgroundImage(it.weather?.get(0)?.id, iconId)
             }
+
 
             mAdapter.setData(forecast?.list)
             binding.rvWeather.apply {
@@ -129,6 +135,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getWeatherByCurrentLocation() {
+        isLoading = true
+        loadingStateView()
         val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (ActivityCompat.checkSelfPermission(
@@ -175,24 +183,15 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.weatherByCurrentLocation(0.0, 0.0)
         viewModel.forecastByCurrentLocation(2.0, 0.6)
-        viewModel.getWeatherByCurrentLocation().observe(this){
-            binding.apply {
-                tvCity.text = it.name
-                tvDegree.text = formatterDegree(it.main?.temp)
 
-                val iconId = it.weather?.get(0)?.icon
-                val iconUrl = BuildConfig.ICON_URL + iconId + sizeIconWeather4x
-                Glide.with(this@MainActivity).load(iconUrl)
-                    .into(imgIcWeather)
-            }
+        viewModel.getWeatherByCurrentLocation().observe(this){
+            setupView(it, null)
         }
 
-        viewModel.getForecastByCurrentLocation().observe(this){
-            mAdapter.setData(it.list)
-            binding.rvWeather.apply {
-                adapter = mAdapter
-                layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-            }
+        viewModel.getForecastByCurrentLocation().observe(this@MainActivity){
+            setupView(null, it)
+            isLoading = false
+            loadingStateView()
         }
     }
 
@@ -201,9 +200,20 @@ class MainActivity : AppCompatActivity() {
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     query?.let {
+                        isLoading = true
+                        loadingStateView()
+                        try {
+                            val inputMethodManager =
+                                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                        } catch (e: Throwable) {
+                            Log.e("MainActivity", e.toString())
+                        }
                         viewModel.weatherByCity(it)
                         viewModel.ForecastByCity(it)
                     }
+                    isLoading = false
+                    loadingStateView()
                     return true
                 }
 
@@ -213,5 +223,24 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
+    }
+
+    private fun loadingStateView() {
+        binding.apply {
+            when (isLoading) {
+                true -> {
+                    layoutWeather.visibility = View.INVISIBLE
+                    progressBar.visibility = View.VISIBLE
+                }
+                false -> {
+                    layoutWeather.visibility = View.VISIBLE
+                    progressBar.visibility = View.INVISIBLE
+                }
+                else -> {
+                    layoutWeather.visibility = View.INVISIBLE
+                    progressBar.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }
